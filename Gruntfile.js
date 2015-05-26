@@ -4,6 +4,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.initConfig({
         stylus: {
@@ -16,7 +17,7 @@ module.exports = function(grunt) {
                 },
 
                 files: {
-                    "public/css/main.css": ["styl/main.styl"]
+                    'public/css/main.css': ['styl/main.styl']
                 }
             }
         },
@@ -44,8 +45,8 @@ module.exports = function(grunt) {
         },
         watch: {
             build: {
-                files: ["styl/**/*.styl", "jade/**/*.jade"],
-                tasks: ["build"],
+                files: ['styl/**', 'jade/**', 'assets/**'],
+                tasks: ['build'],
                 options: {
                     livereload: true
                 }
@@ -60,10 +61,22 @@ module.exports = function(grunt) {
                     open: true
                 }
             }
+        },
+        copy: {
+            public: {
+                files: [
+                    {
+                        cwd: 'assets',
+                        expand: true,
+                        src: ['**'],
+                        dest: 'public/'
+                    },
+                ]
+            }
         }
     });
 
-    grunt.registerTask('build', ['stylus', 'cssmin', 'jade'])
+    grunt.registerTask('build', ['copy', 'stylus', 'cssmin', 'jade'])
     grunt.registerTask('serve', ['connect:server', 'watch'])
     grunt.registerTask('default', ['build'])
 };
