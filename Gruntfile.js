@@ -10,7 +10,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
 
-
     grunt.initConfig({
         //- compile main stylus file to output css file
         stylus: {
@@ -113,7 +112,13 @@ module.exports = function(grunt) {
                     port: 9001,
                     base: 'public',
                     livereload: true,
-                    open: true
+                    open: true,
+                    middleware: function (connect, options) {
+                      return [
+                        require('connect-livereload')(),
+                        connect.static(options.base[0])
+                      ]
+                    }
                 }
             }
         },
