@@ -10,6 +10,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
 
+    var defaultConfigPath = './_js/config/development.json';
+    var envConfigPath = './_js/config/' + process.env.NODE_ENV + '.json';
+    var configPath = grunt.file.exists(envConfigPath) ? envConfigPath : defaultConfigPath;
+    console.log(envConfigPath, grunt.file.exists(envConfigPath))
+
     grunt.initConfig({
         //- compile main stylus file to output css file
         stylus: {
@@ -63,7 +68,12 @@ module.exports = function(grunt) {
         browserify: {
             main: {
                 src: '_js/main.js',
-                dest: 'public/js/main.js'
+                dest: 'public/js/main.js',
+                options: {
+                  alias: {
+                    'config': configPath
+                  }
+                }
             }
         },
 
