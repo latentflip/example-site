@@ -13,7 +13,6 @@ module.exports = function(grunt) {
     var defaultConfigPath = './_js/config/development.json';
     var envConfigPath = './_js/config/' + process.env.NODE_ENV + '.json';
     var configPath = grunt.file.exists(envConfigPath) ? envConfigPath : defaultConfigPath;
-    console.log(envConfigPath, grunt.file.exists(envConfigPath))
 
     grunt.initConfig({
         //- compile main stylus file to output css file
